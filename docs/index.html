@@ -8,69 +8,430 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --darker: #1e272e;
+            --light: #dfe6e9;
+            --white: #ffffff;
         }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background-color: var(--darker);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background-color: rgba(30, 39, 46, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+        
         .hero {
-            background: linear-gradient(135deg, rgba(30,87,153,0.9) 0%,rgba(32,124,202,0.9) 51%,rgba(41,137,216,0.9) 100%), 
-                        url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.9) 0%, rgba(0, 206, 201, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
-            color: white;
-            padding: 100px 0;
-            margin-bottom: 40px;
-        }
-        .card {
-            border-radius: 10px;
+            background-attachment: fixed;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            position: relative;
             overflow: hidden;
-            transition: transform 0.3s;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .card:hover {
-            transform: translateY(-5px);
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: var(--darker);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
         }
-        .feature-icon {
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -15px;
             width: 80px;
-            height: 80px;
+            height: 4px;
+            background: var(--primary);
+        }
+        
+        .section-title.text-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: var(--dark);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.3);
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            text-align: center;
+            height: 100%;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-bottom: 4px solid var(--primary);
+        }
+        
+        .feature-icon {
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 30px;
+            margin: 0 auto 25px;
+            font-size: 35px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
         }
-        .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-            padding: 10px 25px;
+        
+        .btn-custom {
+            padding: 12px 30px;
             font-weight: 600;
             border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+        }
+        
         .btn-primary:hover {
-            background-color: #0b5ed7;
-            border-color: #0a58ca;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
         }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            padding: 40px 0;
-            margin-top: 50px;
+        
+        .btn-outline-light {
+            border: 2px solid var(--light);
         }
+        
+        .btn-outline-light:hover {
+            background-color: var(--light);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .section-dark {
+            background-color: var(--darker);
+            color: var(--light);
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-light {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-accent {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-accent::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: var(--darker);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+            z-index: 1;
+        }
+        
+        .section-accent::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: var(--darker);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 2;
+        }
+        
         .screenshot {
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border: 5px solid white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 5px solid var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.03);
+            box-shadow: 0 25px 50px rgba(108, 92, 231, 0.4);
+        }
+        
+        .list-group-item {
+            background-color: transparent;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            padding: 1rem;
+        }
+        
+        .step-box {
+            background-color: var(--dark);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .step-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        .step-box:hover::before {
+            opacity: 0.1;
+        }
+        
+        .step-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .footer {
+            background-color: var(--darker);
+            color: var(--light);
+            padding: 80px 0 40px;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: var(--dark);
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+            z-index: 1;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: translateY(-5px);
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: -100px;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
+        }
+        
+        .cta-card {
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            color: var(--light) !important;
+            font-weight: 500;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white) !important;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding: 120px 0 80px;
+            }
+            
+            .section-dark, .section-light, .section-accent {
+                padding: 60px 0;
+            }
+            
+            .hero::before, .section-accent::before, .section-accent::after, .footer::before {
+                height: 80px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-chart-line me-2"></i>Material Forecasting
@@ -87,6 +448,9 @@
                         <a class="nav-link" href="#demo">Demo</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">Process</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item">
@@ -101,86 +465,88 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container text-center">
-            <h1 class="display-3 fw-bold mb-4">Material Forecasting System</h1>
-            <p class="lead mb-5">An advanced web application designed to predict future material needs based on historical consumption patterns while accounting for existing stock levels.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="https://material-forecasting.onrender.com" class="btn btn-light btn-lg px-4">
-                    <i class="fas fa-external-link-alt me-2"></i>Launch App
-                </a>
-                <a href="https://github.com/PratikBihari/material-forecasting" class="btn btn-outline-light btn-lg px-4">
-                    <i class="fab fa-github me-2"></i>View on GitHub
-                </a>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-3 fw-bold mb-4">Material <span class="text-gradient">Forecasting</span> System</h1>
+                    <p class="lead mb-5">An advanced AI-powered application designed to predict future material needs based on historical consumption patterns while accounting for existing stock levels.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="https://material-forecasting.onrender.com" class="btn btn-primary btn-custom">
+                            <i class="fas fa-rocket me-2"></i>Launch App
+                        </a>
+                        <a href="https://github.com/PratikBihari/material-forecasting" class="btn btn-outline-light btn-custom">
+                            <i class="fab fa-github me-2"></i>View Source
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" class="img-fluid screenshot mt-5" alt="Dashboard Preview">
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="container my-5" id="features">
-        <h2 class="text-center mb-5">Key Features</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-primary text-white">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Consumption Forecasting</h4>
+    <section class="section-dark" id="features">
+        <div class="container section-content">
+            <h2 class="section-title text-center mb-5">Powerful Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Consumption Forecasting</h4>
                         <p>Predict future consumption based on historical patterns using advanced time series models.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-success text-white">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Material Forecasting</h4>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Material Forecasting</h4>
                         <p>Calculate required new materials by subtracting existing stock from consumption forecasts.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-warning text-white">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Multiple Models</h4>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Multiple Models</h4>
                         <p>Choose from ARIMA, Exponential Smoothing, and SARIMA models for optimal forecasting.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-info text-white">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Financial Year Planning</h4>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Financial Year Planning</h4>
                         <p>Automatically generate forecasts for the next financial year (April 1st to March 31st).</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-danger text-white">
-                        <i class="fas fa-warehouse"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Stock Optimization</h4>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Stock Optimization</h4>
                         <p>Account for current stock levels and pending deliveries to optimize inventory.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="feature-icon bg-secondary text-white">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Interactive Visualizations</h4>
+                <div class="col-md-4">
+                    <div class="card feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4 class="mb-3 text-gradient">Interactive Visualizations</h4>
                         <p>View forecasts through beautiful, interactive charts and dashboards.</p>
                     </div>
                 </div>
@@ -189,85 +555,89 @@
     </section>
 
     <!-- Demo Section -->
-    <section class="bg-light py-5" id="demo">
-        <div class="container">
-            <h2 class="text-center mb-5">Application Preview</h2>
+    <section class="section-light" id="demo">
+        <div class="container section-content">
             <div class="row align-items-center">
-                <div class="col-md-6 mb-4">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Dashboard Preview" class="img-fluid screenshot">
-                </div>
-                <div class="col-md-6">
-                    <h3>Beautiful Visualizations</h3>
-                    <p>The Material Forecasting System provides interactive charts and visualizations to help you understand your data and make informed decisions.</p>
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="section-title mb-4">Application Preview</h2>
+                    <p class="lead mb-4">The Material Forecasting System provides interactive charts and visualizations to help you understand your data and make informed decisions.</p>
                     <ul class="list-group list-group-flush mb-4">
-                        <li class="list-group-item bg-light"><i class="fas fa-check text-success me-2"></i>Interactive time series charts</li>
-                        <li class="list-group-item bg-light"><i class="fas fa-check text-success me-2"></i>Comparison of consumption vs. material forecasts</li>
-                        <li class="list-group-item bg-light"><i class="fas fa-check text-success me-2"></i>Stock level visualization</li>
-                        <li class="list-group-item bg-light"><i class="fas fa-check text-success me-2"></i>Performance metrics (MAPE, RMSE)</li>
+                        <li class="list-group-item"><i class="fas fa-check text-gradient me-2"></i>Interactive time series charts</li>
+                        <li class="list-group-item"><i class="fas fa-check text-gradient me-2"></i>Comparison of consumption vs. material forecasts</li>
+                        <li class="list-group-item"><i class="fas fa-check text-gradient me-2"></i>Stock level visualization</li>
+                        <li class="list-group-item"><i class="fas fa-check text-gradient me-2"></i>Performance metrics (MAPE, RMSE)</li>
                     </ul>
-                    <a href="https://material-forecasting.onrender.com" class="btn btn-primary">
+                    <a href="https://material-forecasting.onrender.com" class="btn btn-primary btn-custom">
                         <i class="fas fa-play-circle me-2"></i>Try the Demo
                     </a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Dashboard Preview" class="img-fluid screenshot">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section class="container my-5">
-        <h2 class="text-center mb-5">How It Works</h2>
-        <div class="row">
-            <div class="col-md-3 text-center">
-                <div class="bg-primary text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-upload fa-2x"></i>
+    <section class="section-accent" id="how-it-works">
+        <div class="container section-content">
+            <h2 class="section-title text-center mb-5">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="step-box">
+                        <div class="step-number">1</div>
+                        <h4>Upload Data</h4>
+                        <p>Upload your CSV file with historical consumption data, stock levels, and pending deliveries.</p>
+                    </div>
                 </div>
-                <h4>Upload Data</h4>
-                <p>Upload your CSV file with historical consumption data.</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="bg-primary text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-cogs fa-2x"></i>
+                <div class="col-md-3">
+                    <div class="step-box">
+                        <div class="step-number">2</div>
+                        <h4>Configure</h4>
+                        <p>Select columns and choose your preferred forecasting model from multiple options.</p>
+                    </div>
                 </div>
-                <h4>Configure</h4>
-                <p>Select columns and choose your preferred forecasting model.</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="bg-primary text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-calculator fa-2x"></i>
+                <div class="col-md-3">
+                    <div class="step-box">
+                        <div class="step-number">3</div>
+                        <h4>Analyze</h4>
+                        <p>Our system analyzes your data using advanced time series models and algorithms.</p>
+                    </div>
                 </div>
-                <h4>Analyze</h4>
-                <p>Our system analyzes your data using advanced time series models.</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="bg-primary text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-chart-bar fa-2x"></i>
+                <div class="col-md-3">
+                    <div class="step-box">
+                        <div class="step-number">4</div>
+                        <h4>Forecast</h4>
+                        <p>View and download material forecasts for the next financial year with interactive charts.</p>
+                    </div>
                 </div>
-                <h4>Forecast</h4>
-                <p>View and download material forecasts for the next financial year.</p>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="bg-light py-5" id="about">
-        <div class="container">
+    <section class="section-dark" id="about">
+        <div class="container section-content">
             <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h2 class="mb-4">About the Project</h2>
-                    <p>The Material Forecasting System was developed to help businesses optimize their inventory management by providing accurate forecasts of future material needs.</p>
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="section-title mb-4">About the Project</h2>
+                    <p class="lead">The Material Forecasting System was developed to help businesses optimize their inventory management by providing accurate forecasts of future material needs.</p>
                     <p>By analyzing historical consumption patterns and accounting for existing stock levels, the system helps reduce carrying costs, prevent stockouts, and improve overall supply chain efficiency.</p>
                     <p>The application is built with Python, Flask, Pandas, Statsmodels, and Plotly, providing a powerful yet user-friendly interface for material forecasting.</p>
                 </div>
-                <div class="col-md-6 text-center">
-                    <img src="https://ui-avatars.com/api/?name=Pratik+Bihari&background=random&color=fff&size=256" class="rounded-circle mb-3" style="width: 150px; height: 150px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <h3>Pratik Bihari</h3>
-                    <p class="text-muted">Developer & Data Scientist</p>
+                <div class="col-lg-6 text-center">
+                    <img src="https://ui-avatars.com/api/?name=Pratik+Bihari&background=6c5ce7&color=fff&size=256" class="profile-img mb-4" alt="Pratik Bihari">
+                    <h3 class="text-gradient">Pratik Bihari</h3>
+                    <p class="text-light mb-4">Developer & Data Scientist</p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="https://github.com/PratikBihari" class="btn btn-dark btn-sm">
-                            <i class="fab fa-github me-1"></i> GitHub
+                        <a href="https://github.com/PratikBihari" class="social-icon">
+                            <i class="fab fa-github fa-lg"></i>
                         </a>
-                        <a href="mailto:your-email@example.com" class="btn btn-primary btn-sm">
-                            <i class="fas fa-envelope me-1"></i> Contact
+                        <a href="mailto:your-email@example.com" class="social-icon">
+                            <i class="fas fa-envelope fa-lg"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in fa-lg"></i>
                         </a>
                     </div>
                 </div>
@@ -276,34 +646,37 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="container my-5 text-center">
-        <div class="card bg-primary text-white p-5">
-            <h2 class="mb-4">Ready to optimize your inventory?</h2>
-            <p class="lead mb-4">Start forecasting your material needs today with our advanced forecasting system.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="https://material-forecasting.onrender.com" class="btn btn-light btn-lg px-4">
-                    <i class="fas fa-rocket me-2"></i>Launch Application
-                </a>
-                <a href="https://github.com/PratikBihari/material-forecasting" class="btn btn-outline-light btn-lg px-4">
-                    <i class="fab fa-github me-2"></i>View Source Code
-                </a>
+    <section class="section-light">
+        <div class="container section-content">
+            <div class="cta-card">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <h2 class="mb-3">Ready to optimize your inventory?</h2>
+                        <p class="lead mb-0">Start forecasting your material needs today with our advanced forecasting system.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="https://material-forecasting.onrender.com" class="btn btn-light btn-custom">
+                            <i class="fas fa-rocket me-2"></i>Launch Application
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container text-center">
+        <div class="container footer-content">
             <div class="row">
-                <div class="col-md-12">
-                    <h4><i class="fas fa-chart-line me-2"></i>Material Forecasting System</h4>
-                    <p>Designed and developed by <strong>Pratik Bihari</strong></p>
+                <div class="col-md-12 text-center">
+                    <h3 class="mb-4"><i class="fas fa-chart-line me-2"></i>Material Forecasting System</h3>
+                    <p class="mb-4">Designed and developed by <strong class="text-gradient">Pratik Bihari</strong></p>
                     <div class="d-flex justify-content-center gap-3 mb-4">
-                        <a href="https://github.com/PratikBihari/material-forecasting" class="text-white">
-                            <i class="fab fa-github fa-2x"></i>
+                        <a href="https://github.com/PratikBihari/material-forecasting" class="social-icon">
+                            <i class="fab fa-github fa-lg"></i>
                         </a>
-                        <a href="mailto:your-email@example.com" class="text-white">
-                            <i class="fas fa-envelope fa-2x"></i>
+                        <a href="mailto:your-email@example.com" class="social-icon">
+                            <i class="fas fa-envelope fa-lg"></i>
                         </a>
                     </div>
                     <p class="small mb-0">© 2025 Pratik Bihari | Advanced Material Forecasting System</p>
