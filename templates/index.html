@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}Material Forecasting - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section with improved image -->
+<div class="container-fluid py-5 mb-4" style="background: linear-gradient(135deg, rgba(30,87,153,0.9) 0%,rgba(32,124,202,0.9) 51%,rgba(41,137,216,0.9) 100%), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); background-size: cover; background-position: center; color: white;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h1 class="display-4 fw-bold mb-3">Material Forecasting</h1>
+                <p class="lead mb-4">Optimize your inventory with AI-powered material forecasting. Predict future material needs based on historical consumption patterns while accounting for existing stock.</p>
+                <a href="#upload-section" class="btn btn-light btn-lg px-4 me-md-2">Get Started</a>
+            </div>
+            <div class="col-md-5 d-none d-md-block">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" class="img-fluid rounded shadow-lg" alt="Forecasting Dashboard" style="border: 5px solid white;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Banner -->
+<div class="container mb-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="p-4 bg-primary bg-opacity-10 rounded-3 h-100">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                <h4><i class="fas fa-chart-line text-primary me-2"></i>Accurate Forecasting</h4>
+                <p class="mb-0">Advanced time series models for precise material predictions</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 bg-success bg-opacity-10 rounded-3 h-100">
+                <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                <h4><i class="fas fa-warehouse text-success me-2"></i>Stock Optimization</h4>
+                <p class="mb-0">Reduce excess inventory while preventing stockouts</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 bg-warning bg-opacity-10 rounded-3 h-100">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                <h4><i class="fas fa-money-bill-wave text-warning me-2"></i>Cost Reduction</h4>
+                <p class="mb-0">Minimize carrying costs and optimize procurement</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <!-- Upload Section -->
+        <div class="card shadow-sm mb-4" id="upload-section">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-upload me-2"></i>Upload Your Data</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 d-none d-md-block text-center">
+                        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded mb-3" style="max-height: 200px;">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="card-text">
+                            Upload a CSV file containing your historical consumption data. The file should include:
+                        </p>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-calendar-alt text-primary me-2"></i>A date/time column</li>
+                            <li class="list-group-item"><i class="fas fa-chart-line text-primary me-2"></i>A consumption/demand column</li>
+                            <li class="list-group-item"><i class="fas fa-boxes text-primary me-2"></i>Recent stock levels (optional, but recommended for material forecasting)</li>
+                            <li class="list-group-item"><i class="fas fa-truck text-primary me-2"></i>Materials still to be delivered (optional)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="mt-4">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select CSV File</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                        <div class="form-text">Only CSV files are supported.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2"><i class="fas fa-arrow-right me-2"></i>Upload & Continue</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- How It Works Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-cogs me-2"></i>How It Works</h3>
+            </div>
+            <div class="card-body" style="background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center;">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="bg-info text-white rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">1</div>
+                            <div>
+                                <h5>Upload Data</h5>
+                                <p class="text-muted">Provide your historical consumption data in CSV format.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="bg-info text-white rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">2</div>
+                            <div>
+                                <h5>Configure</h5>
+                                <p class="text-muted">Select columns and forecasting parameters.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="bg-info text-white rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">3</div>
+                            <div>
+                                <h5>Analyze</h5>
+                                <p class="text-muted">Our system analyzes your data using advanced time series models.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="bg-info text-white rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">4</div>
+                            <div>
+                                <h5>Forecast</h5>
+                                <p class="text-muted">View and download material forecasts for the next financial year.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Forecasting Models Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-brain me-2"></i>Available Forecasting Models</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="ARIMA Model" style="height: 150px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin-top: -50px; border: 3px solid white;">
+                                    <i class="fas fa-chart-bar fa-2x"></i>
+                                </div>
+                                <h5 class="card-title">ARIMA</h5>
+                                <p class="card-text">AutoRegressive Integrated Moving Average model for time series with trends.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Exponential Smoothing" style="height: 150px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin-top: -50px; border: 3px solid white;">
+                                    <i class="fas fa-chart-line fa-2x"></i>
+                                </div>
+                                <h5 class="card-title">Exponential Smoothing</h5>
+                                <p class="card-text">Handles trends and seasonality with weighted averages of past observations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="SARIMA Model" style="height: 150px; object-fit: cover;">
+                            <div class="card-body text-center">
+                                <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin-top: -50px; border: 3px solid white;">
+                                    <i class="fas fa-wave-square fa-2x"></i>
+                                </div>
+                                <h5 class="card-title">SARIMA</h5>
+                                <p class="card-text">Seasonal ARIMA model for time series with both trend and seasonal components.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Material Forecasting Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="card-title mb-0"><i class="fas fa-lightbulb me-2"></i>Material Forecasting for Financial Year</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="card-text">
+                            This application is specifically designed to forecast material needs for the next financial year (April 1st to March 31st).
+                            The forecast takes into account:
+                        </p>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><i class="fas fa-history text-warning me-2"></i>Historical consumption patterns</li>
+                            <li class="list-group-item"><i class="fas fa-warehouse text-warning me-2"></i>Current stock levels (subtracted from consumption forecast)</li>
+                            <li class="list-group-item"><i class="fas fa-shipping-fast text-warning me-2"></i>Pending deliveries (if provided)</li>
+                        </ul>
+                        <img src="https://images.unsplash.com/photo-1494607275381-3f3736ded479?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded shadow-sm d-none d-md-block" alt="Financial Planning">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Material Forecast vs. Consumption Forecast:</h5>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-primary text-white rounded p-2 me-3">
+                                        <i class="fas fa-chart-area"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Consumption Forecast:</strong> Predicts how much will be consumed based on historical patterns
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success text-white rounded p-2 me-3">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Material Forecast:</strong> Predicts how much new material you need to order, after accounting for existing stock
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded shadow-sm" alt="Data Analysis">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Preview Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-chart-pie me-2"></i>Beautiful Visualizations</h3>
+            </div>
+            <div class="card-body text-center">
+                <p class="lead mb-4">Generate professional charts and actionable insights</p>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded shadow-sm" alt="Chart Example">
+                        <p class="mt-2">Consumption Trends</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded shadow-sm" alt="Dashboard Example">
+                        <p class="mt-2">Material Forecasts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Attribution Footer -->
+        <div class="text-center py-4 mt-2 mb-5">
+            <div class="card bg-dark text-white shadow">
+                <div class="card-body">
+                    <img src="https://ui-avatars.com/api/?name=Pratik+Bihari&background=random&color=fff&size=128" class="rounded-circle mb-3" style="width: 80px; height: 80px; border: 3px solid white;">
+                    <p class="mb-0">
+                        <i class="fas fa-code me-2"></i> Designed and Developed by <strong>Pratik Bihari</strong>
+                    </p>
+                    <p class="text-muted small mb-0">
+                        Advanced Material Forecasting System &copy; 2025
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block head_extra %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+    }
+    .list-group-item:first-child {
+        border-top: none;
+    }
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+    .rounded-circle {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .bg-primary.bg-opacity-10 {
+        background-color: rgba(13, 110, 253, 0.1) !important;
+    }
+    .bg-success.bg-opacity-10 {
+        background-color: rgba(25, 135, 84, 0.1) !important;
+    }
+    .bg-warning.bg-opacity-10 {
+        background-color: rgba(255, 193, 7, 0.1) !important;
+    }
+</style>
+{% endblock %} 

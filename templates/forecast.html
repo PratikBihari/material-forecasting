@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Material Forecasting - Results{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0">Material Forecast Results for Next Financial Year (April 1 - March 31)</h3>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="card-title mb-0">Model Performance</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <h6>MAPE</h6>
+                                            <h2>{{ "%.2f"|format(mape) }}%</h2>
+                                            <p class="text-muted">Mean Absolute Percentage Error</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-center">
+                                            <h6>RMSE</h6>
+                                            <h2>{{ "%.2f"|format(rmse) }}</h2>
+                                            <p class="text-muted">Root Mean Square Error</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h5 class="card-title mb-0">Actions</h5>
+                            </div>
+                            <div class="card-body d-flex flex-column justify-content-center">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" id="download-csv">Download Forecast CSV</button>
+                                    <button class="btn btn-info" id="download-chart">Download Chart</button>
+                                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Start New Forecast</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">Material Forecast Visualization</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <strong>Material Forecast</strong> shows the quantity of new materials needed after accounting for existing stock. <strong>Consumption Forecast</strong> shows the total expected consumption regardless of stock.
+                        </div>
+                        <div id="forecast-chart" style="height: 500px;"></div>
+                    </div>
+                </div>
+                
+                {% if stock_delivery_graph_json %}
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">Stock, Delivery, and Material Forecast</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            This chart shows how recent stock levels and pending deliveries relate to your material forecast.
+                        </div>
+                        <div id="stock-delivery-chart" style="height: 500px;"></div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">Forecast Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {{ forecast_table | safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Parse the graph data
+        const graphJSON = {{ graph_json | safe }};
+        
+        // Create the plot
+        Plotly.newPlot('forecast-chart', graphJSON.data, graphJSON.layout);
+        
+        // Handle stock and delivery chart if data is available
+        {% if stock_delivery_graph_json %}
+            // Parse the stock and delivery graph data
+            const stockDeliveryGraphJSON = {{ stock_delivery_graph_json | safe }};
+            
+            // Create the stock and delivery plot
+            Plotly.newPlot('stock-delivery-chart', stockDeliveryGraphJSON.data, stockDeliveryGraphJSON.layout);
+        {% endif %}
+        
+        // Download CSV functionality
+        document.getElementById('download-csv').addEventListener('click', function() {
+            const tableEl = document.querySelector('table');
+            let csv = [];
+            
+            // Get all rows
+            const rows = tableEl.querySelectorAll('tr');
+            
+            // Loop through rows
+            for (let i = 0; i < rows.length; i++) {
+                const row = [], cols = rows[i].querySelectorAll('td, th');
+                
+                // Loop through columns
+                for (let j = 0; j < cols.length; j++) {
+                    // Clean the text and wrap in quotes
+                    let text = cols[j].innerText.replace(/"/g, '""');
+                    row.push('"' + text + '"');
+                }
+                
+                csv.push(row.join(','));
+            }
+            
+            // Download the CSV file
+            const csvString = csv.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'material_forecast_data.csv');
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+        
+        // Download chart functionality
+        document.getElementById('download-chart').addEventListener('click', function() {
+            Plotly.downloadImage('forecast-chart', {
+                format: 'png',
+                filename: 'material_forecast_chart',
+                width: 1200,
+                height: 800
+            });
+        });
+    });
+</script>
+{% endblock %} 

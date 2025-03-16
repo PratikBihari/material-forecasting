@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Material Forecasting - Configure{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">Configure Material Forecasting Parameters</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-4">
+                    <strong>Material Forecast</strong> calculates the quantity of new materials needed based on your consumption forecast, after accounting for existing stock.
+                </div>
+                
+                <h4>Data Preview</h4>
+                <div class="table-responsive mb-4">
+                    {{ preview | safe }}
+                </div>
+                
+                <form action="{{ url_for('configure') }}" method="post">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="date_column" class="form-label">Date Column</label>
+                                <select class="form-select" id="date_column" name="date_column" required>
+                                    <option value="" selected disabled>Select date column</option>
+                                    {% for column in columns %}
+                                    <option value="{{ column }}">{{ column }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Select the column containing date/time information.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="target_column" class="form-label">Consumption Column</label>
+                                <select class="form-select" id="target_column" name="target_column" required>
+                                    <option value="" selected disabled>Select consumption column</option>
+                                    {% for column in columns %}
+                                    <option value="{{ column }}">{{ column }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Select the column containing historical consumption values to forecast.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="stock_column" class="form-label">Recent Stock Column</label>
+                                <select class="form-select" id="stock_column" name="stock_column">
+                                    <option value="" selected disabled>Select stock column (optional)</option>
+                                    {% for column in columns %}
+                                    <option value="{{ column }}">{{ column }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Select the column containing recent stock information. This will be subtracted from the consumption forecast.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="delivery_column" class="form-label">Pending Delivery Column</label>
+                                <select class="form-select" id="delivery_column" name="delivery_column">
+                                    <option value="" selected disabled>Select delivery column (optional)</option>
+                                    {% for column in columns %}
+                                    <option value="{{ column }}">{{ column }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">Select the column containing pending delivery information (optional).</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="forecast_periods" class="form-label">Forecast Periods</label>
+                                <input type="number" class="form-control" id="forecast_periods" name="forecast_periods" value="12" min="1" max="60" required>
+                                <div class="form-text">Number of future periods to forecast (default: 12 months). Will be adjusted to cover the next financial year (April 1st to March 31st).</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="model_type" class="form-label">Forecasting Model</label>
+                                <select class="form-select" id="model_type" name="model_type" required>
+                                    <option value="arima" selected>ARIMA</option>
+                                    <option value="exponential_smoothing">Exponential Smoothing</option>
+                                    <option value="sarima">SARIMA</option>
+                                </select>
+                                <div class="form-text">Select the time series forecasting model to use.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary me-md-2">Back</a>
+                        <button type="submit" class="btn btn-primary">Generate Material Forecast</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
