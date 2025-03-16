@@ -30,7 +30,7 @@ Designed and developed by **Pratik Bihari**.
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/material-forecasting.git
+   git clone https://github.com/PratikBihari/material-forecasting.git
    cd material-forecasting
    ```
 

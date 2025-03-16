@@ -15,7 +15,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 # Create Flask app
 app = Flask(__name__)
 app.secret_key = 'demand_forecasting_secret_key'
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER', 'uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'csv'}
 
 # Create uploads folder if it doesn't exist
@@ -354,4 +354,6 @@ def create_stock_delivery_plot(df, stock_column, delivery_column, forecast_df):
     return fig
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    # Use PORT environment variable if it exists (for Render deployment)
+    port = int(os.environ.get('PORT', 5002))
+    app.run(host='0.0.0.0', port=port, debug=False) 
